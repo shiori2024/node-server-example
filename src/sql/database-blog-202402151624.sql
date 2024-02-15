@@ -1,5 +1,5 @@
 -- MySQL dump 10.13  Distrib 5.7.41, for Win64 (x86_64)
--- Author: shiori2024
+--
 -- Host: localhost    Database: blog
 -- ------------------------------------------------------
 -- Server version	5.7.41-log
@@ -16,10 +16,36 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `products`
+--
+
+DROP TABLE IF EXISTS `products`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `products` (
+  `id` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `name` varchar(255) DEFAULT 'value' COMMENT '商品',
+  `images` varchar(255) DEFAULT NULL,
+  `tags` varchar(255) DEFAULT NULL,
+  `createdAt` datetime DEFAULT NULL,
+  `updatedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `products`
+--
+
+LOCK TABLES `products` WRITE;
+/*!40000 ALTER TABLE `products` DISABLE KEYS */;
+INSERT INTO `products` VALUES ('1','棒棒糖','https://bkimg.cdn.bcebos.com/pic/b151f8198618367adab429b0bf249cd4b31c87014f1c?x-bce-process=image/resize,m_lfit,w_536,limit_1/quality,Q_70','零食',NULL,NULL),('2','火腿肠','https://bkimg.cdn.bcebos.com/pic/f9198618367adab4ad22361784d4b31c8601e4f0?x-bce-process=image/resize,m_lfit,w_536,limit_1/quality,Q_70','零食',NULL,NULL);
+/*!40000 ALTER TABLE `products` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `admin`
 --
--- 如果数据库blog不存在则创建
-create database if not exists blog;
 
 DROP TABLE IF EXISTS `admin`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -69,6 +95,35 @@ INSERT INTO `category` VALUES (517267652452421,'Java',1704122847962),(5172682679
 UNLOCK TABLES;
 
 --
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `nickname` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `createdAt` datetime NOT NULL,
+  `updatedAt` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'admin','123456','shiori','shiori2024@163.com','2024-02-15 15:05:31','2024-02-15 15:05:46'),(2,'admin','123456','jack','shiori2024@163.com','2024-02-15 15:06:42','2024-02-15 15:06:35'),(3,'陆强','sed','邱平','v.eoctgostap@qq.com','2024-02-15 07:35:49','2024-02-15 08:21:58');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `post`
 --
 
@@ -95,38 +150,6 @@ LOCK TABLES `post` WRITE;
 INSERT INTO `post` VALUES (517471686828101,517271099871301,'测试内容001','测试内容001',1704172661043,NULL),(517475192668229,517271099871301,'测试内容002','测试内容002',1704173516960,NULL),(517475242217541,517271099871301,'测试内容003','测试内容003',1704173529057,NULL),(517475283583045,517271099871301,'测试内容004','测试内容004',1704173539156,NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `tutorials`
---
-
-DROP TABLE IF EXISTS `tutorials`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tutorials` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `content` text NOT NULL,
-  `author` varchar(255) NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tutorials`
---
-
-LOCK TABLES `tutorials` WRITE;
-/*!40000 ALTER TABLE `tutorials` DISABLE KEYS */;
-INSERT INTO `tutorials` VALUES (1,'test2','测试字段','shiori2024','2024-02-11 08:01:20','2024-02-11 08:01:20'),(2,'test3','测试字段','shiori2024','2024-02-11 08:01:33','2024-02-11 08:01:33');
-/*!40000 ALTER TABLE `tutorials` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping routines for database 'blog'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -137,4 +160,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-11 16:17:03
+-- Dump completed on 2024-02-15 16:24:11
