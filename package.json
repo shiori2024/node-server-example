@@ -11,7 +11,11 @@
     "express",
     "sequelize"
   ],
-  "author": "",
+  "author": "shiori2024",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shiori2024/node-server-example"
+  },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
