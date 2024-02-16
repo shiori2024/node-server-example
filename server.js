@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
 })
 
 // 导入自定义路由模块  
-require('./src/app/routes/user')(app);
+require('./src/app/routes/interview')(app);
 
 // 设置监听端口
 const PORT = process.env.DEV_PORT || 3000

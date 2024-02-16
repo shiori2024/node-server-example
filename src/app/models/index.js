@@ -1,4 +1,4 @@
-const dbConfig = require("../config/db.mysql.config.js");
+const dbConfig = require("../config/db.mysql.config.js"); // 可自定义数据库配置
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
@@ -13,11 +13,12 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     }
 });
 
+// 抛出实例化对象，使其能被其他文件引用
 const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("./user.model.js")(sequelize, Sequelize);
+db.interview = require("./interview.model.js")(sequelize, Sequelize);
 
 module.exports = db;

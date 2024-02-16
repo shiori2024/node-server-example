@@ -1,5 +1,5 @@
 # 服务端
-一个Nodejs服务端模板项目。  
+实战项目面经基础版后端服务API实现  
 [中文说明](README.md) | [English](README-en.md)
 ## 项目简介
 
@@ -14,3 +14,5 @@ node server.js
 # or
 nodemon .\server.js
 ```
+
+## API

@@ -1,7 +1,7 @@
 {
-  "name": "shiori-node-server-example",
+  "name": "shiori-mianjing-node-server",
   "version": "1.0.0",
-  "description": "一个Nodejs服务端模板项目",
+  "description": "实战项目面经基础版后端服务API实现",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,7 @@
   "author": "shiori2024",
   "repository": {
     "type": "git",
-    "url": "https://github.com/shiori2024/node-server-example"
+    "url": "https://github.com/shiori2024/node-server-example/tree/mianjing-server"
   },
   "license": "ISC",
   "dependencies": {

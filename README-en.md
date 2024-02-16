@@ -1,5 +1,5 @@
 # Server
-A template project for a Node.js server.  
+Implementation of Basic Backend Service API for Practical Projects.  
 [Chinese](README.md) | [English](README-en.md)
 ## Description
 
@@ -14,3 +14,5 @@ node server.js
 # or
 nodemon .\server.js
 ```
+
+## API

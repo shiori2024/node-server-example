@@ -1,34 +1,35 @@
+// 控制层，主要编写业务逻辑处理响应请求
 const db = require("../models");
 // 导入model层
-const User = db.user;
-// 原神启动！（其实是Sequelize内置好的interface查询条件
+const Interview = db.interview;
+// Sequelize内置好的interface查询条件
 const Op = db.Sequelize.Op;
 
-// 创建并保存用户名
+// 创建并保存
 exports.create = (req, res) => {
-  if (!req.body.username || !req.body.password) {
+  if (!req.body.title || !req.body.content || !req.body.nickname) {
     res.status(404).json({
       status: 'error',
-      message: "用户名和密码不能为空"
+      message: "面经标题，内容和作者不能为空！"
     });
     return;
   }
 
-  // 将req请求存到临时用户对象
-  const user = {
-    username: req.body.username,
-    password: req.body.password,
-    nickname: req.body.nickname || null,
-    email: req.body.email || null
+  // 将req请求存到临时对象
+  const interview = {
+    title: req.body.title,
+    content: req.body.content,
+    nickname: req.body.nickname,
+    fromLink: req.body.fromLink || null
   };
 
   // 保存到数据库
-  User.create(user)
+  Interview.create(interview)
     .then(data => {
       // 数据库处理成功返回data对象
       res.status(201).json({
         status: 'success',
-        message: '用户创建成功',
+        message: '面经发布成功！',
         data
       });
     })
@@ -36,21 +37,18 @@ exports.create = (req, res) => {
       res.status(500).json({
         status: 'error',
         message:
-          err.message || "创建用户时，发生错误！"
+          err.message || "发布面经时，发生错误！"
       });
     });
 };
 
 // 数据库查询所有条目
 exports.findAll = (req, res) => {
-  // 条件语句
-  // let condition = username ? { username: { [Op.like]: `%${username}%` } } : null;
-
-  User.findAll()
+  Interview.findAll()
     .then(data => {
       res.status(200).json({
         status: 'success',
-        message: '用户信息查询成功',
+        message: '面经库信息查询成功！',
         data
       });
     })
@@ -69,22 +67,22 @@ exports.findOne = async (req, res) => {
     const id = req.params.id;
 
     // 使用findByPk方法直接查找具有匹配id的数据行  
-    const data = await User.findByPk(id);
+    const data = await Interview.findByPk(id);
     if (data) {
       // 如果找到了用户，返回整个数据行  
       res.status(200).json({
         status: 'success',
-        message: '用户信息查询成功',
+        message: '面经库信息查询成功！',
         data
       });
     } else {
-      // 如果没有找到用户，返回404错误  
-      return res.status(404).json({ error: `没有找到ID为 ${id} 的用户` });
+      // 如果没有找到该文章，返回404错误  
+      return res.status(404).json({ error: `没有找到ID为 ${id} 的面经文章！` });
     }
   } catch (err) {
     // 如果在查询过程中发生错误，记录错误并返回500错误  
-    console.error(err); // 在生产环境中，您可能希望使用更复杂的错误日志记录  
-    return res.status(500).json({ error: `查询ID为 ${id} 时出错` });
+    //console.error(err); 在生产环境中，您可能使用更复杂的错误日志记录，如logger之类的  
+    return res.status(500).json({ error: `查询ID为【${id}】的文章时出错` });
   }
 };
 
@@ -92,26 +90,27 @@ exports.findOne = async (req, res) => {
 exports.update = async (req, res) => {
   const id = req.params.id;
 
-  // 从请求体中获取必要的字段  
-  const { nickname, username, password, email } = req.body;
+  // 从请求体中获取必要的字段，根据业务需求判断，文章更新功能验证conten字段是否更新就行  
+  const { content } = req.body;
 
   // 验证请求体是否包含必要的字段  
-  if (!nickname) {
+  if (!content) {
     return res.status(400).json({
       status: 'error',
-      message: '请求体中必须包含 nickname 字段！'
+      message: '请求体中必须包含 content 字段！'
     });
   }
 
-  // 使用 Sequelize 的 update 方法更新用户信息  
+  // 将req请求存到临时对象
+  const interview = {
+    title: req.body.title,
+    content: req.body.content,
+    nickname: req.body.nickname
+  };
+  // 使用 Sequelize 的 update 方法更新信息  
   try {
-    const num = await User.update(
-      {
-        username,
-        password,
-        email,
-        nickname
-      },
+    const num = await Interview.update(
+      interview,
       {
         where: {
           id: {
@@ -124,18 +123,18 @@ exports.update = async (req, res) => {
     if (num > 0) {
       res.status(202).json({
         status: 'success',
-        message: '更新成功！'
+        message: '面经更新成功！'
       });
     } else {
       res.status(404).json({
         status: 'error',
-        message: `未找到ID为 ${id} 的用户进行更新！`
+        message: `未找到ID为 ${id} 的文章进行更新！`
       });
     }
   } catch (err) {
     res.status(500).json({
       status: 'error',
-      message: `更新用户时出错: ${err.message}`
+      message: `更新时出错: ${err.message}`
     });
   }
 };
@@ -144,7 +143,7 @@ exports.update = async (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id;
 
-  User.destroy({
+  Interview.destroy({
     where: { id: id }
   })
     .then(num => {
@@ -156,7 +155,7 @@ exports.delete = (req, res) => {
       } else {
         res.status(404).json({
           status: 'error',
-          message: `id为:【${id}】的用户删除失败！`
+          message: `id为:【${id}】的面经文章删除失败！`
         });
       }
     })
@@ -171,7 +170,7 @@ exports.delete = (req, res) => {
 
 // 删除数据库中所有条目
 exports.deleteAll = (req, res) => {
-  User.destroy({
+  Interview.destroy({
     where: {},
     truncate: false
   })
