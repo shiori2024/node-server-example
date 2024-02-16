@@ -1,4 +1,4 @@
-# 服务端
+# node-server-example
 一个Nodejs服务端模板项目。  
 [中文说明](README.md) | [English](README-en.md)
 ## 项目简介

@@ -1,4 +1,4 @@
-# Server
+# node-server-example
 A template project for a Node.js server.  
 [Chinese](README.md) | [English](README-en.md)
 ## Description
