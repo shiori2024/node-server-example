@@ -103,15 +103,17 @@ exports.update = async (req, res) => {
     });
   }
 
+  // 将req请求存到临时用户对象
+  const user = {
+    username: req.body.username,
+    password: req.body.password,
+    nickname: req.body.nickname || null,
+    email: req.body.email || null
+  };
   // 使用 Sequelize 的 update 方法更新用户信息  
   try {
     const num = await User.update(
-      {
-        username,
-        password,
-        email,
-        nickname
-      },
+      user,
       {
         where: {
           id: {
